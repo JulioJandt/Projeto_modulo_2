@@ -2,36 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendWelcomeEmailToUser;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    public function register(Request $request)
+    public function store(Request $request)
     {
-        // Validação dos dados da requisição
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'date_birth' => 'required|date',
-            'cpf' => 'required|max:14|unique:users',
-            'password' => 'required|min:8|max:32',
-            'plan_id' => 'required|exists:plans,id',
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required|max:255',
+                'email' => 'required|email|unique:users|max:255',
+                'date_birth' => 'required|date',
+                'cpf' => 'required|unique:users|max:14',
+                'password' => 'required|min:8|max:32',
+                'plan_id' => 'required|exists:plans,id',
+            ]);
 
-        // Se a validação falhar, retorna um erro 400
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'date_birth' => $request->input('date_birth'),
+                'cpf' => $request->input('cpf'),
+                'password' => Hash::make($request->input('password')),
+                'plan_id' => $request->input('plan_id'),
+            ]);
+
+            // Envie o e-mail de boas-vindas
+            Mail::to($user->email, $user->name)
+                ->send(new SendWelcomeEmailToUser($user));
+
+            // Resposta de sucesso
+            return response()->json($user, 201);
+        }
+        catch (\Exception $exception) {
+            return $this->error($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        // Cria o usuário
-        $user = User::create($request->all());
 
-        // Envio de e-mail de boas-vindas
-        // (Implemente esta parte com a lógica de envio de e-mail no Laravel)
-
-        // Retorna os dados do usuário (exceto senha e remember_token)
-        return response()->json($user->makeHidden(['password', 'remember_token']), 201);
     }
 }

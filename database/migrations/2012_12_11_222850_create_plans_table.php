@@ -24,17 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 255);
-            $table->string('email', 255)->unique();
-            $table->date('date_birth');
-            $table->string('cpf', 14)->unique();
-            $table->string('password', 255);
-            $table->foreignId('plan_id')->constrained('plans');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        Schema::dropIfExists('plans');
     }
 };
