@@ -32,7 +32,7 @@ class UserController extends Controller
                 'plan_id' => $request->input('plan_id'),
             ]);
 
-            // Envie o e-mail de boas-vindas
+
             Mail::to($user->email, $user->name)
                 ->send(new SendWelcomeEmailToUser($user));
 
@@ -42,7 +42,6 @@ class UserController extends Controller
         catch (\Exception $exception) {
             return $this->error($exception->getMessage(), Response::HTTP_BAD_REQUEST);
         }
-
 
     }
 }
