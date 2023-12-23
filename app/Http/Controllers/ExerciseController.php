@@ -27,6 +27,25 @@ class ExerciseController extends Controller
             ]);
 
             return response()->json($exercise, 201);
+
+
+        } catch (\Exception $exception) {
+            return $this->error($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function index()
+    {
+        try {
+            // Obtém o usuário autenticado
+            $user = Auth::user();
+
+            // Lista os exercícios do usuário ordenados pela descrição
+            $exercises = Exercise::where('user_id', $user->id)
+                ->orderBy('description')
+                ->get(['id', 'description']);
+
+            return response()->json($exercises, 200);
         } catch (\Exception $exception) {
             return response()->json(['error' => $exception->getMessage()], 500);
         }
