@@ -2,9 +2,10 @@
 
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 Route::middleware('jwt.auth')->group(function () {
-    Route::middleware('jwt.auth')->get('/dashboard', 'DashboardController@index');
+    Route::middleware('jwt.auth')->get('/dashboard', [DashboardController::class, 'index']);
 
 });
 
