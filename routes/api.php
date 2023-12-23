@@ -9,6 +9,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::middleware('jwt.auth')->get('/dashboard', [DashboardController::class, 'index']);
     Route::middleware('jwt.auth')->get('/exercises', [ExerciseController::class, 'index']);
     Route::middleware('jwt.auth')->post('/exercises', [ExerciseController::class, 'store']);
+    Route::delete('/exercises/{id}', [ExerciseController::class, 'destroy']);
 
 });
 

@@ -24,4 +24,6 @@ class Exercise extends Model
     {
         return $this->hasMany(Exercise::class);
     }
+
+
 }
