@@ -1,3 +1,3 @@
 Ola teste
-{{$name}}
-{{$limit > 0 ? $limit : 'ILIMITADO'}}
+/*{{$name}}
+{{$limit > 0 ? $limit : 'ILIMITADO'}}*/
