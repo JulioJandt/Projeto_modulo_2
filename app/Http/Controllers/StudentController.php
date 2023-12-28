@@ -175,4 +175,17 @@ class StudentController extends Controller
             return response()->json(['error' => $exception->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function show($id)
+{
+    try {
+        $student = Student::with('address')->findOrFail($id);
+
+        // Resposta de sucesso
+        return response()->json($student, 200);
+    } catch (\Exception $exception) {
+        // Resposta de erro
+        return response()->json(['error' => $exception->getMessage()], 500);
+    }
+}
 }
