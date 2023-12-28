@@ -122,4 +122,57 @@ class StudentController extends Controller
             return response()->json(['error' => $exception->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $user = Auth::user();
+            $id = (int)$id; // Garante que $id seja um número inteiro
+            $student = Student::find($id);
+
+            // Verificar se o estudante existe
+            if (!$student) {
+                return response()->json(['error' => 'Estudante não encontrado'], Response::HTTP_NOT_FOUND);
+            }
+
+            // Verificar se o estudante pertence ao usuário autenticado
+            if ($student->user_id !== $user->id) {
+                return response()->json(['error' => 'Acesso não autorizado'], Response::HTTP_FORBIDDEN);
+            }
+
+            // Validar os dados da requisição
+            $request->validate([
+                'name' => 'sometimes|string|max:255',
+                'email' => [
+                    'sometimes',
+                    'email',
+                    'max:255',
+                    Rule::unique('students')->ignore($student->id),
+                ],
+                'date_birth' => 'sometimes|date_format:Y-m-d',
+                'cpf' => [
+                    'sometimes',
+                    'string',
+                    Rule::unique('students')->ignore($student->id),
+                    'regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/',
+                    'regex:/^\d{3}\d{3}\d{3}\d{2}$/',
+                ],
+                'cep' => 'sometimes|string',
+                'street' => 'sometimes|string',
+                'state' => 'sometimes|string|max:2',
+                'neighborhood' => 'sometimes|string|max:50',
+                'city' => 'sometimes|string|max:50',
+                'number' => 'sometimes|string|max:30',
+                'contact' => 'sometimes|string|max:20',
+            ]);
+
+            // Atualizar os dados do estudante
+            $student->update($request->all());
+
+            // Resposta de sucesso
+            return response()->json($student, Response::HTTP_OK);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
