@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\WorkoutController;
 
 Route::middleware('jwt.auth')->group(function () {
     Route::middleware('jwt.auth')->get('/dashboard', [DashboardController::class, 'index']);
@@ -17,6 +18,10 @@ Route::middleware('jwt.auth')->group(function () {
     Route::middleware('jwt.auth')->get('/students', [StudentController::class, 'index']);
     Route::middleware('jwt.auth')->delete('/students/{id}', [StudentController::class, 'destroy']);
     Route::middleware('jwt.auth')->put('/students/{id}', [StudentController::class, 'update']);
+
+    Route::middleware('jwt.auth')->post('/workouts', [WorkoutController::class, 'store']);
+    Route::middleware('jwt.auth')->get('/students/{id}/workouts', [WorkoutController::class, 'indexByStudent']);
+
 });
 
 use App\Http\Controllers\UserController;
