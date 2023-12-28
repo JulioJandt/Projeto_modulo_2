@@ -9,11 +9,24 @@ class Workout extends Model
 {
     use HasFactory;
 
-    // Defina a relação com o modelo Exercise
+    protected $fillable = [
+        'student_id',
+        'exercise_id',
+        'repetitions',
+        'weight',
+        'break_time',
+        'day',
+        'observations',
+        'time',
+    ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
     public function exercise()
     {
         return $this->belongsTo(Exercise::class);
     }
-
-
 }
