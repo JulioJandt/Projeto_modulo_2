@@ -72,5 +72,28 @@ class StudentController extends Controller
         return $planLimit !== null && $amountStudents >= $planLimit;
     }
 
+    public function index(Request $request)
+    {
+        try {
+            $user = Auth::user();
 
+            // Filtros de pesquisa
+            $query = Student::where('user_id', $user->id);
+
+            if ($request->has('search')) {
+                $search = $request->input('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                      ->orWhere('cpf', 'like', '%' . $search . '%')
+                      ->orWhere('email', 'like', '%' . $search . '%');
+                });
+            }
+
+            $students = $query->orderBy('name')->get();
+
+            return response()->json($students, 200);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
