@@ -155,7 +155,7 @@ class StudentController extends Controller
                     'string',
                     Rule::unique('students')->ignore($student->id),
                     'regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/',
-                    'regex:/^\d{3}\d{3}\d{3}\d{2}$/',
+
                 ],
                 'cep' => 'sometimes|string',
                 'street' => 'sometimes|string',
