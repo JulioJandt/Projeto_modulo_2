@@ -43,6 +43,23 @@ class WorkoutController extends Controller
             return response()->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }
+    public function indexByStudent($studentId)
+{
+    try {
+        $workouts = Workout::where('student_id', $studentId)
+            ->orderBy('day')
+            ->orderBy('created_at')
+            ->get();
 
+        // Organizar treinos por dia da semana
+        $workoutsByDay = $workouts->groupBy('day');
+
+        // Resposta de sucesso
+        return response()->json($workoutsByDay, 200);
+    } catch (\Exception $exception) {
+        // Resposta de erro
+        return response()->json(['error' => $exception->getMessage()], 500);
+    }
+}
 
 }
