@@ -14,6 +14,7 @@ Route::middleware('jwt.auth')->group(function () {
     Route::middleware('jwt.auth')->post('/exercises', [ExerciseController::class, 'store']);
     Route::delete('/exercises/{id}', [ExerciseController::class, 'destroy']);
 
+    Route::get('/students/export', 'PdfExportController@exportPdf');
     Route::middleware('jwt.auth')->get('/students/{id}', [StudentController::class, 'show']);
     Route::middleware('jwt.auth')->post('/students', [StudentController::class, 'store']);
     Route::middleware('jwt.auth')->get('/students', [StudentController::class, 'index']);
@@ -22,6 +23,7 @@ Route::middleware('jwt.auth')->group(function () {
 
     Route::middleware('jwt.auth')->post('/workouts', [WorkoutController::class, 'store']);
     Route::middleware('jwt.auth')->get('/students/{id}/workouts', [WorkoutController::class, 'indexByStudent']);
+
 
 
 });

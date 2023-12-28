@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exercise;
+use App\Models\Workout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,6 +73,9 @@ class ExerciseController extends Controller
 
             // Verifica se há treinos vinculados ao exercício
             if ($exercise->workouts()->exists()) {
+                return response()->json(['error' => 'Não é permitido deletar exercício devido a treinos vinculados.'], 409);
+            }
+            if (Workout::where('exercise_id', $exercise->id)->exists()) {
                 return response()->json(['error' => 'Não é permitido deletar exercício devido a treinos vinculados.'], 409);
             }
 
