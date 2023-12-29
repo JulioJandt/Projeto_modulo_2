@@ -51,7 +51,7 @@ Rota: POST /api/users
   "password": "senha123",
   "plan_id": 1
 } 
-        ```
+       ```http
     
 - Resposta:
 
@@ -69,7 +69,7 @@ Rota: POST /api/login
   "email": "juliocezar.jandt@gmail.com",
   "password": "senha123"
 }
-    ```
+ ```http
 - Resposta:
 
 HTTP Status Code 200 (OK) em caso de sucesso, com o token JWT válido por 24 horas e o nome do usuário.
@@ -89,7 +89,7 @@ Rota: GET /api/dashboard
   "current_user_plan": "Bronze",
   "remaining_students": 5
 }
-    ```
+   ```http
     
 Status Codes:
 
@@ -114,7 +114,7 @@ HTTP Status Code 409 (Conflict) em caso de exercício já cadastrado para o mesm
 Rota: GET /api/exercises
 
 - Response:
-
+```http
 [
   {
     "id": 1,
@@ -125,6 +125,7 @@ Rota: GET /api/exercises
     "description": "Exercício 2"
   }
 ]
+```http
 Status Codes:
 
 HTTP Status Code 200 (OK), com a lista de exercícios ordenada pela descrição.
