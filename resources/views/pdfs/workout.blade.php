@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-    <h1><strong>Academia Namekusei</strong></h1>
+    <h1><strong>Academia Time Chamber</strong></h1>
     <h2>Relatório de Treino</h2>
     <p><strong>Nome do Estudante:</strong> {{ $student->name }}</p>
 
