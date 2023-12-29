@@ -17,8 +17,8 @@ git clone https://github.com/JulioJandt/Projeto_modulo_2.git
 
 ### Navegue até o diretório do projeto:
 
--cd time-chamber
--Crie um arquivo .env baseado no .env.example e configure seu banco de dados.
+- cd time-chamber
+- Crie um arquivo .env baseado no .env.example e configure seu banco de dados.
 
 ### Instale as dependências do Composer:
 
@@ -26,12 +26,12 @@ git clone https://github.com/JulioJandt/Projeto_modulo_2.git
 
 ### Execute as migrações e seeders para criar o banco de dados:
 
--php artisan db:seed PopulatePlans
--php artisan migrate 
+- php artisan db:seed PopulatePlans
+- php artisan migrate 
 
 ### Inicie o servidor:
 
--php artisan serve
+- php artisan serve
 
 O projeto estará disponível em http://localhost:8000.
 
@@ -40,9 +40,9 @@ O projeto estará disponível em http://localhost:8000.
 ### Cadastro de Usuário (S01)
 Rota: POST /api/users
 
--Requisição em json:
+- Requisição em json:
 
-
+```http
 {
   "name": "Nome do Usuário",
   "email": "usuario@exemple.com",
@@ -50,8 +50,10 @@ Rota: POST /api/users
   "cpf": "123.456.789-09",
   "password": "senha123",
   "plan_id": 1
-}
--Resposta:
+} 
+        ```
+    
+- Resposta:
 
 HTTP Status Code 201 (CREATED) em caso de sucesso, com os detalhes do usuário (exceto password e remember_token).
 
@@ -60,15 +62,15 @@ HTTP Status Code 400 (Bad Request) em caso de dados inválidos, informando mensa
 ### Login (S02)
 Rota: POST /api/login
 
--Requisição:
+- Requisição:
 
-json
-Copy code
+```http
 {
   "email": "juliocezar.jandt@gmail.com",
   "password": "senha123"
 }
--Resposta:
+    ```
+- Resposta:
 
 HTTP Status Code 200 (OK) em caso de sucesso, com o token JWT válido por 24 horas e o nome do usuário.
 
@@ -79,26 +81,28 @@ HTTP Status Code 401 (UNAUTHORIZED) em caso de login inválido.
 ### Dashboard (S03)
 Rota: GET /api/dashboard
 
--Response em json:
-
+- Response em json:
+    ```http
 {
   "registered_students": 10,
   "registered_exercises": 5,
   "current_user_plan": "Bronze",
   "remaining_students": 5
 }
+    ```
+    
 Status Codes:
 
 HTTP Status Code 200 (OK), com as estatísticas do dashboard.
 Cadastro de Exercícios (S04)
 Rota: POST /api/exercises
 
--Requisição em json:
+- Requisição em json:
 
 {
   "description": "Exercício 1"
 }
--Resposta:
+- Resposta:
 
 HTTP Status Code 201 (CREATED) em caso de sucesso, com os detalhes do exercício.
 
@@ -109,7 +113,7 @@ HTTP Status Code 409 (Conflict) em caso de exercício já cadastrado para o mesm
 ### Listagem de Exercícios (S05)
 Rota: GET /api/exercises
 
--Response:
+- Response:
 
 [
   {
@@ -140,7 +144,7 @@ HTTP Status Code 404 (NOT FOUND) em caso do exercício não existir.
 ### Cadastro de Estudante (S07)
 Rota: POST /api/students
 
--Requisição:
+- Requisição:
 
 {
   "name": "Estudante 1",
@@ -150,7 +154,7 @@ Rota: POST /api/students
   "contact": "123456789",
   "plan_id": 1
 }
--Resposta:
+- Resposta:
 
 HTTP Status Code 201 (CREATED) em caso de sucesso, com os detalhes do estudante.
 
@@ -163,7 +167,7 @@ Rota: GET /api/students
 
 Query Params: pesquisa geral - nome, cpf e email
 
--Response:
+- Response:
 
 [
   {
@@ -200,17 +204,15 @@ Rota: PUT /api/students/:id
   "name": "Estudante Atualizado",
   "email": "atualizado@example.com"
 }
--Resposta:
+- Resposta:
 
 HTTP Status Code 200 (OK) em caso de sucesso.
 
 ### Cadastro de Treinos (S11)
 Rota: POST /api/workouts
 
--Requisição:
+- Requisição:
 
-json
-Copy code
 {
   "student_id": 1,
   "exercise_id": 1,
@@ -221,7 +223,7 @@ Copy code
   "observations": "Treino intenso",
   "time": 60
 }
--Resposta:
+- Resposta:
 
 HTTP Status Code 201 (CREATED) em caso de sucesso, com os detalhes do treino.
 
@@ -232,7 +234,7 @@ HTTP Status Code 409 (Conflict) em caso de exercício já cadastrado para o mesm
 ### Listagem de Treinos do Estudante (S12)
 Rota: GET /api/students/:id/workouts
 
--Response:
+- Response:
 
 {
   "QUARTA": [
@@ -259,7 +261,7 @@ HTTP Status Code 200 (OK), com a lista de treinos do estudante separada por dia 
 ### Listagem de um Estudante (S13)
 Rota: GET /api/students/:id
 
--Response:
+- Response:
 
 {
   "id": 1,
