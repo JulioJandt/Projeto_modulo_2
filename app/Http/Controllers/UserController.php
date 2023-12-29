@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendWelcomeEmailToUser;
+use App\Models\Plan;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -32,9 +33,13 @@ class UserController extends Controller
                 'plan_id' => $request->input('plan_id'),
             ]);
 
+            $plan = Plan::find($user->plan_id);
 
-            Mail::to($user->email, $user->name)
-                ->send(new SendWelcomeEmailToUser($user));
+
+            Mail::send('emails.welcome_email', ['user' => $user, 'plan' => $plan], function ($message) use ($user) {
+                $message->to($user->email, $user->name)
+                        ->subject('Bem-vindo(a) ao Nosso Sistema!');
+            });
 
             // Resposta de sucesso
             return response()->json($user, 201);
