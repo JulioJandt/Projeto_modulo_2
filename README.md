@@ -51,8 +51,8 @@ Rota: POST /api/users
   "password": "senha123",
   "plan_id": 1
 } 
-       ```http
-    
+```
+
 - Resposta:
 
 HTTP Status Code 201 (CREATED) em caso de sucesso, com os detalhes do usuário (exceto password e remember_token).
@@ -60,6 +60,7 @@ HTTP Status Code 201 (CREATED) em caso de sucesso, com os detalhes do usuário (
 HTTP Status Code 400 (Bad Request) em caso de dados inválidos, informando mensagem de erro explicativa.
 
 ### Login (S02)
+
 Rota: POST /api/login
 
 - Requisição:
@@ -69,7 +70,8 @@ Rota: POST /api/login
   "email": "juliocezar.jandt@gmail.com",
   "password": "senha123"
 }
- ```http
+```
+
 - Resposta:
 
 HTTP Status Code 200 (OK) em caso de sucesso, com o token JWT válido por 24 horas e o nome do usuário.
@@ -79,18 +81,20 @@ HTTP Status Code 400 (Bad Request) em caso de dados inválidos, informando mensa
 HTTP Status Code 401 (UNAUTHORIZED) em caso de login inválido.
 
 ### Dashboard (S03)
+
 Rota: GET /api/dashboard
 
 - Response em json:
-    ```http
+
+```http
 {
   "registered_students": 10,
   "registered_exercises": 5,
   "current_user_plan": "Bronze",
   "remaining_students": 5
 }
-   ```http
-    
+```
+
 Status Codes:
 
 HTTP Status Code 200 (OK), com as estatísticas do dashboard.
@@ -99,9 +103,12 @@ Rota: POST /api/exercises
 
 - Requisição em json:
 
+```http
 {
   "description": "Exercício 1"
 }
+```
+
 - Resposta:
 
 HTTP Status Code 201 (CREATED) em caso de sucesso, com os detalhes do exercício.
@@ -114,6 +121,7 @@ HTTP Status Code 409 (Conflict) em caso de exercício já cadastrado para o mesm
 Rota: GET /api/exercises
 
 - Response:
+
 ```http
 [
   {
@@ -125,7 +133,8 @@ Rota: GET /api/exercises
     "description": "Exercício 2"
   }
 ]
-```http
+```
+
 Status Codes:
 
 HTTP Status Code 200 (OK), com a lista de exercícios ordenada pela descrição.
@@ -170,6 +179,7 @@ Query Params: pesquisa geral - nome, cpf e email
 
 - Response:
 
+```http
 [
   {
     "id": 1,
@@ -182,6 +192,8 @@ Query Params: pesquisa geral - nome, cpf e email
     "email": "estudante2@example.com"
   }
 ]
+```
+
 Status Codes:
 
 HTTP Status Code 200 (OK), com a lista de estudantes ordenada pelo nome.
@@ -201,10 +213,13 @@ Rota: PUT /api/students/:id
 
 -Requisição:
 
+```http
 {
   "name": "Estudante Atualizado",
   "email": "atualizado@example.com"
 }
+```
+
 - Resposta:
 
 HTTP Status Code 200 (OK) em caso de sucesso.
@@ -214,6 +229,7 @@ Rota: POST /api/workouts
 
 - Requisição:
 
+```http
 {
   "student_id": 1,
   "exercise_id": 1,
@@ -224,6 +240,8 @@ Rota: POST /api/workouts
   "observations": "Treino intenso",
   "time": 60
 }
+```
+
 - Resposta:
 
 HTTP Status Code 201 (CREATED) em caso de sucesso, com os detalhes do treino.
@@ -237,6 +255,7 @@ Rota: GET /api/students/:id/workouts
 
 - Response:
 
+```http
 {
   "QUARTA": [
     {
@@ -255,6 +274,8 @@ Rota: GET /api/students/:id/workouts
   ],
   "TERÇA": []
 }
+```
+
 Status Codes:
 
 HTTP Status Code 200 (OK), com a lista de treinos do estudante separada por dia da semana.
@@ -264,6 +285,7 @@ Rota: GET /api/students/:id
 
 - Response:
 
+```http
 {
   "id": 1,
   "name": "Estudante 1",
@@ -279,6 +301,8 @@ Rota: GET /api/students/:id
   "state": "SP",
   "cep": "12345-678"
 }
+```
+
 Status Codes:
 
 HTTP Status Code 200 (OK), com os dados do estudante e endereço.
